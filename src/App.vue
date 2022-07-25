@@ -1,9 +1,12 @@
 <template>
-  <main class="columns is-gapless is-multiline">
+  <main
+    class="columns is-gapless is-multiline"
+    :class="{ 'dark-mode': darkModeAtivo }"
+  >
     <div class="column is-one-quarter">
-      <BarraLateral />
+      <BarraLateral @temaAlterado="trocarTema" />
     </div>
-    <div class="column is-three-quarter">
+    <div class="column is-three-quarter content">
       <ToDo @aoSalvarTarefa="salvarTarefa" />
       <div class="lista">
         <Tarefa
@@ -31,6 +34,7 @@ export default defineComponent({
   data() {
     return {
       tarefas: [] as ITarefa[],
+      darkModeAtivo: false,
     };
   },
   computed: {
@@ -42,12 +46,29 @@ export default defineComponent({
     salvarTarefa(tarefa: ITarefa) {
       this.tarefas.push(tarefa);
     },
+    trocarTema(darkModeAtivo: boolean) {
+      this.darkModeAtivo = darkModeAtivo;
+    },
   },
 });
 </script>
 
-<style>
+<style scoped>
 .lista {
   padding: 1.25rem;
+}
+
+main {
+  --bg-primario: #fff;
+  --texto-primario: #000;
+}
+
+main.dark-mode {
+  --bg-primario: #2b2d42;
+  --texto-primario: #ddd;
+}
+
+.content {
+  background-color: var(--bg-primario);
 }
 </style>
