@@ -3,34 +3,68 @@
     <h1>
       <img src="../assets/logo.svg" alt="Logo Alura" />
     </h1>
+    <div class="position">
+      <button class="button" @click="alterarTema">
+        {{ textButton }}
+      </button>
+    </div>
   </header>
 </template>
 
 <script lang="ts">
-  import { defineComponent } from "vue";
+import { defineComponent } from "vue";
 
-  export default defineComponent({
-    name: 'BarraLateral',
-  })
+export default defineComponent({
+  name: "BarraLateral",
+  emits: ["temaAlterado"],
+  data() {
+    return {
+      darkModeAtivo: false,
+    };
+  },
+  computed: {
+    textButton() {
+      if (this.darkModeAtivo) {
+        return "Light mode";
+      }
+      return "Dark mode";
+    },
+  },
+  methods: {
+    alterarTema() {
+      this.darkModeAtivo = !this.darkModeAtivo;
+      this.$emit("temaAlterado", this.darkModeAtivo);
+    },
+  },
+});
 </script>
 
 <style>
+header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  height: 100vh;
+  padding: 2rem;
+  background: #0d3b66;
+}
+@media only screen and (max-width: 768px) {
   header {
-    display: flex;
-    justify-content: center;
-    width: 100%;
-    height: 100vh;
-    padding: 2rem;
-    background: #0d3b66;
+    padding: 2.5rem;
+    height: auto;
   }
-  @media only screen and (max-width: 768px) {
-    header {
-      padding: 2.5rem;
-      height: auto;
-    }
-  }
+}
 
-  img {
-    width: 10rem;
-  }
+.position {
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-end;
+  width: 100%;
+  height: 100%;
+}
+
+img {
+  width: 10rem;
+}
 </style>
