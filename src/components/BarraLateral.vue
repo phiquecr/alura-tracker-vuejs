@@ -3,7 +3,10 @@
     <h1>
       <img src="../assets/logo.svg" alt="Logo Alura" />
     </h1>
-    <div class="position">
+    <div class="position-left">
+      <Navegacao />
+    </div>
+    <div class="position-bottom">
       <button class="button" @click="alterarTema">
         {{ textButton }}
       </button>
@@ -13,6 +16,7 @@
 
 <script lang="ts">
 import { defineComponent } from "vue";
+import Navegacao from "./Navegacao.vue";
 
 export default defineComponent({
   name: "BarraLateral",
@@ -36,6 +40,7 @@ export default defineComponent({
       this.$emit("temaAlterado", this.darkModeAtivo);
     },
   },
+  components: { Navegacao },
 });
 </script>
 
@@ -56,7 +61,13 @@ header {
   }
 }
 
-.position {
+.position-left {
+  display: flex;
+  justify-content: left;
+  width: 100%;
+}
+
+.position-bottom {
   display: flex;
   justify-content: flex-start;
   align-items: flex-end;
