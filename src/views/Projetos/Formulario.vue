@@ -20,10 +20,10 @@
 <script lang="ts">
 import { defineComponent } from "vue";
 import { useStore } from "@/store";
-import { ALTERA_PROJETO, ADICIONA_PROJETO } from "@/store/type-mutations";
 import { TipoNotificacao } from "@/interfaces/INotificacao";
 
 import useNotificador from "@/hooks/notificador";
+import { ALTERAR_PROJETOS, CADASTRAR_PROJETOS } from "@/store/type-actions";
 
 export default defineComponent({
   name: "FormularioItem",
@@ -48,13 +48,19 @@ export default defineComponent({
   methods: {
     save() {
       if (this.id) {
-        this.store.commit(ALTERA_PROJETO, {
-          id: this.id,
-          name: this.nomeDoProjeto,
-        });
+        this.store
+          .dispatch(ALTERAR_PROJETOS, {
+            id: this.id,
+            name: this.nomeDoProjeto,
+          })
+          .then(() => this.toSuccess());
       } else {
-        this.store.commit(ADICIONA_PROJETO, this.nomeDoProjeto);
+        this.store
+          .dispatch(CADASTRAR_PROJETOS, this.nomeDoProjeto)
+          .then(() => this.toSuccess());
       }
+    },
+    toSuccess() {
       this.nomeDoProjeto = "";
       this.notificar(
         TipoNotificacao.SUCCESS,
