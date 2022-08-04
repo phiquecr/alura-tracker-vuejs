@@ -7,6 +7,7 @@
       <BarraLateral @temaAlterado="trocarTema" />
     </div>
     <div class="column is-three-quarters content">
+      <Notificacoes />
       <RouterView />
     </div>
   </main>
@@ -15,10 +16,11 @@
 <script lang="ts">
 import { defineComponent } from "vue";
 import BarraLateral from "./components/BarraLateral.vue";
+import Notificacoes from "./components/Notificacoes.vue";
 
 export default defineComponent({
   name: "App",
-  components: { BarraLateral },
+  components: { BarraLateral, Notificacoes },
   data() {
     return {
       darkModeAtivo: false,

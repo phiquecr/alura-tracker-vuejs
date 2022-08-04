@@ -35,7 +35,9 @@
 </template>
 
 <script lang="ts">
+import { TipoNotificacao } from "@/interfaces/INotificacao";
 import { key } from "@/store";
+import { NOTIFICAR } from "@/store/type-mutations";
 import { computed } from "@vue/reactivity";
 import { defineComponent } from "vue";
 import { useStore } from "vuex";
@@ -61,12 +63,22 @@ export default defineComponent({
         projeto: this.projetos.find((proj) => proj.id == this.idProjeto),
       });
       this.descricao = "";
+      const projeto = this.projetos.find((proj) => proj.id == this.idProjeto);
+      if (!projeto) {
+        this.store.commit(NOTIFICAR, {
+          title: "Ops!",
+          text: "Selecione um projeto antes de finalizar a tarefa!",
+          type: TipoNotificacao.WARNING,
+        });
+        return;
+      }
     },
   },
   setup() {
     const store = useStore(key);
     return {
       projetos: computed(() => store.state.projetos),
+      store,
     };
   },
 });
